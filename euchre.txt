@@ -1,0 +1,79 @@
+#ifndef EUCHRE_HPP
+#define EUCHRE_HPP
+
+#include "Player.hpp"
+#include "Card.hpp"
+
+
+
+#endif
+
+
+
+Game 
+
+constructor 
+public play() function
+
+shuffle 
+    pack.shuffle
+
+deal  
+    vector of pattern
+    go through vector and for each one for that number of times for that index mod 4 player deal cards
+
+int make_trump
+    for int i = 0, i < 3; i ++
+        ind ++ % 4 where ind = dealer
+        if make_trump
+            reutrn i
+    
+    now round 2
+        player to dealers left (dealer + 1 % 4) start and make trump (round 2 and upcard is stil upcard) js do this four times and eventually come back to dealer and itll automatically screw dealer
+
+play_hand
+    int team1score
+    int team2score
+    int last_trick_winner = dealer
+    for loop 5 times
+        int winner = play_trick(last_trick_winner, trump)
+        last_trick_winner = winner
+        if winner on team 1 : team 1 score ++ 
+        else team 2 score ++ 
+    dealer++
+
+    
+int play_trick(start, trump)
+    int max_card_player;
+    Card max_card
+    for int i < 4, i ++
+        if (i == 0){
+            max_card = player[start + 1].lead_card(trump)
+            max_card_player = start + i;
+        }
+        else {
+            if Card_less(max_card, player[start + 1 + i], trump){
+                max_card_player = start + 1 + i;
+                max_card = player[start + 1 + i]
+            }
+        }
+
+    return max_card_player
+
+
+
+Pack pack; 
+std::vector<Player*> players;
+
+play function 
+    shuffle pack 
+    deal cards to players 
+    make_trump
+    play_hand
+
+delete players after game 
+
+announce hand starting at 0 
+print decision of making trump during 
+
+play game -> keep playing unitl total points of each team doesnt reach ten 
