@@ -244,13 +244,8 @@ Suit Suit_next(Suit suit)
   return suit;
 }
 
-bool Card_less(const Card &a, const Card &b, Suit trump)
+static bool trump_less(const Card &a, const Card &b, Suit trump)
 {
-  if (a == b)
-  {
-    return false;
-  }
-
   if (a.is_right_bower(trump))
   {
     return false;
@@ -286,7 +281,18 @@ bool Card_less(const Card &a, const Card &b, Suit trump)
   return a < b;
 }
 
-bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump)
+bool Card_less(const Card &a, const Card &b, Suit trump)
+{
+  if (a == b)
+  {
+    return false;
+  }
+
+  return trump_less(a, b, trump);
+}
+
+bool Card_less(const Card &a, const Card &b,
+               const Card &led_card, Suit trump)
 {
   if (a == b)
   {
@@ -295,33 +301,25 @@ bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump)
 
   if (led_card.get_suit(trump) == trump)
   {
-    return Card_less(a, b, trump);
+    return trump_less(a, b, trump);
   }
 
-  if (a.is_right_bower(trump))
+  if (a.is_right_bower(trump) || a.is_left_bower(trump))
   {
     return false;
   }
-  if (b.is_right_bower(trump))
+  if (b.is_right_bower(trump) || b.is_left_bower(trump))
   {
     return true;
   }
 
-  if (a.is_left_bower(trump))
+  if (a.is_trump(trump) && b.is_trump(trump))
   {
-    return false;
-  }
-  if (b.is_left_bower(trump))
-  {
-    return true;
+    return a < b;
   }
 
   if (a.is_trump(trump))
   {
-    if (b.is_trump(trump))
-    {
-      return a < b;
-    }
     return false;
   }
 

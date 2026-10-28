@@ -9,7 +9,8 @@ using namespace std;
 class Game
 {
 public:
-    Game(bool shuffle, int pts_to_win, std::vector<Player *> players, std::istream &pack_input);
+    Game(bool shuffle, int pts_to_win,
+         std::vector<Player *> players, std::istream &pack_input);
     void play();
 
 private:
@@ -28,7 +29,8 @@ private:
     void play_hand(Suit &trump_suit, Card &upcard);
 };
 
-Game::Game(bool noshuffle, int pts_to_win, vector<Player *> players, istream &pack_input)
+Game::Game(bool noshuffle, int pts_to_win,
+           vector<Player *> players, istream &pack_input)
 {
     this->pack = Pack(pack_input);
     this->noshuffle = noshuffle;
@@ -59,26 +61,48 @@ int Game::make_trump(Suit &trump_suit, Card &upcard)
 {
     for (int i = 0; i < players.size(); i++)
     {
-        if (players[(i + dealer + 1) % players.size()]->make_trump(upcard, (i + dealer + 1) % players.size() == dealer, 1, trump_suit))
+        if (players[(i + dealer + 1) %
+                    players.size()]
+                ->make_trump(upcard,
+                             (i + dealer + 1) %
+                                     players.size() ==
+                                 dealer,
+                             1, trump_suit))
         {
-            cout << players[(i + dealer + 1) % players.size()]->get_name() << " orders up " << trump_suit << endl;
+            cout << players[(i + dealer + 1) %
+                            players.size()]
+                        ->get_name()
+                 << " orders up " << trump_suit << endl;
             players[dealer]->add_and_discard(upcard);
             cout << endl;
             return (i + dealer + 1) % players.size();
         }
-        cout << players[(i + dealer + 1) % players.size()]->get_name() << " passes" << endl;
+        cout << players[(i + dealer + 1) %
+                        players.size()]
+                    ->get_name()
+             << " passes" << endl;
     }
 
     for (int i = 0; i < players.size(); i++)
     {
-        if (players[(i + dealer + 1) % players.size()]->make_trump(upcard, (i + dealer + 1) % players.size() == dealer, 2, trump_suit))
+        if (players[(i + dealer + 1) %
+                    players.size()]
+                ->make_trump(upcard,
+                             (i + dealer + 1) %
+                                     players.size() ==
+                                 dealer,
+                             2, trump_suit))
         {
-            cout << players[(i + dealer + 1) % players.size()]->get_name() << " orders up " << trump_suit << endl
+            cout << players[(i + dealer + 1) % players.size()]->get_name()
+                 << " orders up " << trump_suit << endl
                  << endl;
             return (i + dealer + 1) % players.size();
         }
 
-        cout << players[(i + dealer + 1) % players.size()]->get_name() << " passes" << endl;
+        cout << players[(i + dealer + 1) %
+                        players.size()]
+                    ->get_name()
+             << " passes" << endl;
     }
 
     return -1;
@@ -111,19 +135,22 @@ void Game::play_hand(Suit &trump_suit, Card &upcard)
         if (team1_hand_score > 4)
         {
             team1_score += 2;
-            cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
+            cout << players[0]->get_name() << " and "
+                 << players[2]->get_name() << " win the hand" << endl;
             cout << "march!"
                  << endl;
         }
         else if (team1_hand_score >= 3)
         {
             team1_score += 1;
-            cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
+            cout << players[0]->get_name() << " and "
+                 << players[2]->get_name() << " win the hand" << endl;
         }
         else
         {
             team2_score += 2;
-            cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
+            cout << players[1]->get_name() << " and "
+                 << players[3]->get_name() << " win the hand" << endl;
             cout << "euchred!" << endl;
         }
     }
@@ -132,25 +159,32 @@ void Game::play_hand(Suit &trump_suit, Card &upcard)
         if (team2_hand_score > 4)
         {
             team2_score += 2;
-            cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
+            cout << players[1]->get_name() << " and "
+                 << players[3]->get_name() << " win the hand" << endl;
             cout << "march!"
                  << endl;
         }
         else if (team2_hand_score >= 3)
         {
             team2_score += 1;
-            cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
+            cout << players[1]->get_name() << " and "
+                 << players[3]->get_name() << " win the hand" << endl;
         }
         else
         {
             team1_score += 2;
-            cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
+            cout << players[0]->get_name() << " and "
+                 << players[2]->get_name() << " win the hand" << endl;
             cout << "euchred!" << endl;
         }
     }
 
-    cout << players[0]->get_name() << " and " << players[2]->get_name() << " have " << team1_score << " points" << endl;
-    cout << players[1]->get_name() << " and " << players[3]->get_name() << " have " << team2_score << " points" << endl
+    cout << players[0]->get_name() << " and "
+         << players[2]->get_name() << " have " << team1_score
+         << " points" << endl;
+    cout << players[1]->get_name() << " and "
+         << players[3]->get_name() << " have " << team2_score
+         << " points" << endl
          << endl;
 }
 
@@ -164,26 +198,33 @@ int Game::play_trick(int start, Suit &trump_suit)
     {
         if (i == 0)
         {
-            Card played = players[(start + i) % players.size()]->lead_card(trump_suit);
+            Card played = players[(start + i) %
+                                  players.size()]
+                              ->lead_card(trump_suit);
             max_card = played;
             max_card_player = (start + i) % players.size();
             led_card = max_card;
 
-            cout << played << " led by " << players[(start + i) % players.size()]->get_name() << endl;
+            cout << played << " led by "
+                 << players[(start + i) % players.size()]->get_name() << endl;
         }
         else
         {
-            Card played = players[(start + i) % players.size()]->play_card(led_card, trump_suit);
+            Card played = players[(start + i) %
+                                  players.size()]
+                              ->play_card(led_card, trump_suit);
             if (Card_less(max_card, played, led_card, trump_suit))
             {
                 max_card_player = (start + i) % players.size();
                 max_card = played;
             }
-            cout << played << " played by " << players[(start + i) % players.size()]->get_name() << endl;
+            cout << played << " played by "
+                 << players[(start + i) % players.size()]->get_name() << endl;
         }
     }
 
-    cout << players[max_card_player]->get_name() << " takes the trick" << endl
+    cout << players[max_card_player]->get_name()
+         << " takes the trick" << endl
          << endl;
     return max_card_player;
 }
@@ -219,11 +260,13 @@ void Game::play()
 
     if (team1_score >= pts_to_win)
     {
-        cout << players[0]->get_name() << " and " << players[2]->get_name() << " win!" << endl;
+        cout << players[0]->get_name() << " and "
+             << players[2]->get_name() << " win!" << endl;
     }
     else
     {
-        cout << players[1]->get_name() << " and " << players[3]->get_name() << " win!" << endl;
+        cout << players[1]->get_name() << " and "
+             << players[3]->get_name() << " win!" << endl;
     }
 
     for (size_t i = 0; i < players.size(); ++i)
@@ -232,27 +275,32 @@ void Game::play()
     }
 }
 
-int main(int argc, char **argv)
+bool is_valid_int(const string &str)
 {
-    bool valid_int = true;
-    if (argc == 12)
+    if (str.empty())
     {
-        if (string(argv[3]).length() == 0)
+        return false;
+    }
+    for (int i = 0; i < str.length(); i++)
+    {
+        if ((str[i]) < '0' || (str[i]) > '9')
         {
-            valid_int = false;
-        }
-        else
-        {
-            for (int i = 0; i < string(argv[3]).length(); i++)
-            {
-                if ((string(argv[3])[i]) < '0' || (string(argv[3])[i]) > '9')
-                {
-                    valid_int = false;
-                }
-            }
+            return false;
         }
     }
-    if (argc == 12 && valid_int && stoi(argv[3]) >= 1 && stoi(argv[3]) <= 100 && (string(argv[2]) == "shuffle" || string(argv[2]) == "noshuffle") && (string(argv[5]) == "Simple" || string(argv[5]) == "Human") && (string(argv[7]) == "Simple" || string(argv[7]) == "Human") && (string(argv[9]) == "Simple" || string(argv[9]) == "Human") && (string(argv[11]) == "Simple" || string(argv[11]) == "Human"))
+    return true;
+}
+
+int main(int argc, char **argv)
+{
+    bool valid_int = (argc == 12) && is_valid_int(string(argv[3]));
+    if (argc == 12 && valid_int && stoi(argv[3]) >= 1 &&
+        stoi(argv[3]) <= 100 &&
+        (string(argv[2]) == "shuffle" || string(argv[2]) == "noshuffle") &&
+        (string(argv[5]) == "Simple" || string(argv[5]) == "Human") &&
+        (string(argv[7]) == "Simple" || string(argv[7]) == "Human") &&
+        (string(argv[9]) == "Simple" || string(argv[9]) == "Human") &&
+        (string(argv[11]) == "Simple" || string(argv[11]) == "Human"))
     {
         ifstream pack_input(argv[1]);
         if (!pack_input)
@@ -273,7 +321,8 @@ int main(int argc, char **argv)
         vector<Player *> players;
         for (int i = 0; i < 8; i += 2)
         {
-            players.push_back(Player_factory(string(argv[i + 4]), string(argv[i + 5])));
+            players.push_back(Player_factory(string(argv[i + 4]),
+                                             string(argv[i + 5])));
         }
         Game game(noshuffle, pts_to_win, players, pack_input);
         game.play();

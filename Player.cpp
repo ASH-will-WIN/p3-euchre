@@ -49,7 +49,8 @@ public:
         {
             for (int i = 0; i < hand.size(); i++)
             {
-                if (hand[i].is_face_or_ace() && hand[i].is_trump(Suit_next(upcard.get_suit())))
+                if (hand[i].is_face_or_ace() &&
+                    hand[i].is_trump(Suit_next(upcard.get_suit())))
                 {
                     order_up_suit = Suit_next(upcard.get_suit());
                     return true;
@@ -94,11 +95,15 @@ public:
                 all_trump = false;
             }
 
-            if (hand[i].is_trump(trump) && (highest_trump == -1 || Card_less(hand[highest_trump], hand[i], trump)))
+            if (hand[i].is_trump(trump) &&
+                (highest_trump == -1 ||
+                 Card_less(hand[highest_trump], hand[i], trump)))
             {
                 highest_trump = i;
             }
-            if (!hand[i].is_trump(trump) && (highest_non_trump == -1 || Card_less(hand[highest_non_trump], hand[i], trump)))
+            if (!hand[i].is_trump(trump) &&
+                (highest_non_trump == -1 ||
+                 Card_less(hand[highest_non_trump], hand[i], trump)))
             {
                 highest_non_trump = i;
             }
@@ -131,12 +136,14 @@ public:
             {
                 follow_suit = true;
 
-                if (highest_suit == -1 || Card_less(hand[highest_suit], hand[i], trump))
+                if (highest_suit == -1 ||
+                    Card_less(hand[highest_suit], hand[i], trump))
                 {
                     highest_suit = i;
                 }
             }
-            else if (lowest_index == -1 || Card_less(hand[i], hand[lowest_index], trump))
+            else if (lowest_index == -1 ||
+                     Card_less(hand[i], hand[lowest_index], trump))
             {
                 lowest_index = i;
             }
@@ -192,7 +199,8 @@ public:
                     int round, Suit &order_up_suit) const
     {
         print_hand();
-        cout << "Human player " << name << ", please enter a suit, or \"pass\":\n";
+        cout << "Human player " << name
+             << ", please enter a suit, or \"pass\":\n";
         string input;
         cin >> input;
         if (input == "pass")
@@ -212,7 +220,8 @@ public:
 
         print_hand();
         cout << "Discard upcard: [-1]\n";
-        cout << "Human player " << name << ", please select a card to discard:\n";
+        cout << "Human player " << name
+             << ", please select a card to discard:\n";
         int discard_card;
         cin >> discard_card;
         if (discard_card != -1)
@@ -226,7 +235,8 @@ public:
     {
         assert(hand.size() >= 1);
         print_hand();
-        cout << "Human player " << name << ", please select a card:\n";
+        cout << "Human player " << name
+             << ", please select a card:\n";
         int selected;
         cin >> selected;
         Card lead = hand[selected];
@@ -238,7 +248,8 @@ public:
     {
         assert(hand.size() >= 1);
         print_hand();
-        cout << "Human player " << name << ", please select a card:\n";
+        cout << "Human player " << name
+             << ", please select a card:\n";
         int selected;
         cin >> selected;
         Card play = hand[selected];

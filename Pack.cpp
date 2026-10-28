@@ -46,8 +46,16 @@ void Pack::shuffle()
 {
     for (int i = 0; i < 7; i++)
     {
-        array<Card, 12> first_half = array<Card, 12>{cards[0], cards[1], cards[2], cards[3], cards[4], cards[5], cards[6], cards[7], cards[8], cards[9], cards[10], cards[11]};
-        array<Card, 12> second_half = array<Card, 12>{cards[12], cards[13], cards[14], cards[15], cards[16], cards[17], cards[18], cards[19], cards[20], cards[21], cards[22], cards[23]};
+        array<Card, 12> first_half = array<Card, 12>{};
+        for (int j = 0; j < 12; j++)
+        {
+            first_half[j] = cards[j];
+        }
+        array<Card, 12> second_half = array<Card, 12>{};
+        for (int j = 0; j < 12; j++)
+        {
+            second_half[j] = cards[j + 12];
+        }
         array<Card, 24> shuffled;
         for (int j = 0; j < 24; j++)
         {
