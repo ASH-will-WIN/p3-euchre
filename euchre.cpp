@@ -234,8 +234,32 @@ void Game::play()
 
 int main(int argc, char **argv)
 {
-    if (argc == 12 && stoi(argv[3]) >= 1 && stoi(argv[3]) <= 100 && (string(argv[2]) == "shuffle" || string(argv[2]) == "noshuffle") && (string(argv[5]) == "Simple" || string(argv[5]) == "Human") && (string(argv[7]) == "Simple" || string(argv[7]) == "Human") && (string(argv[9]) == "Simple" || string(argv[9]) == "Human") && (string(argv[11]) == "Simple" || string(argv[11]) == "Human"))
+    bool valid_int = true;
+    if (argc == 12)
     {
+        if (string(argv[3]).length() == 0)
+        {
+            valid_int = false;
+        }
+        else
+        {
+            for (int i = 0; i < string(argv[3]).length(); i++)
+            {
+                if ((string(argv[3])[i]) < '0' || (string(argv[3])[i]) > '9')
+                {
+                    valid_int = false;
+                }
+            }
+        }
+    }
+    if (argc == 12 && valid_int && stoi(argv[3]) >= 1 && stoi(argv[3]) <= 100 && (string(argv[2]) == "shuffle" || string(argv[2]) == "noshuffle") && (string(argv[5]) == "Simple" || string(argv[5]) == "Human") && (string(argv[7]) == "Simple" || string(argv[7]) == "Human") && (string(argv[9]) == "Simple" || string(argv[9]) == "Human") && (string(argv[11]) == "Simple" || string(argv[11]) == "Human"))
+    {
+        ifstream pack_input(argv[1]);
+        if (!pack_input)
+        {
+            cout << "Error opening " << argv[1] << endl;
+            return -1;
+        }
 
         for (int i = 0; i < 12; i++)
         {
@@ -246,12 +270,6 @@ int main(int argc, char **argv)
         bool noshuffle = (string(argv[2]) == "noshuffle");
         int pts_to_win = stoi(argv[3]);
 
-        ifstream pack_input(argv[1]);
-        if (!pack_input)
-        {
-            cout << "Error opening " << argv[1] << endl;
-            return -1;
-        }
         vector<Player *> players;
         for (int i = 0; i < 8; i += 2)
         {
